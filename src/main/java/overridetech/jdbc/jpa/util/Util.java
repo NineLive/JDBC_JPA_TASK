@@ -21,8 +21,7 @@ public class Util {
     public static Connection getConnection() {
         try {
             DriverManager.registerDriver((Driver) Class.forName(DRIVER).newInstance());
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            return connection;
+            return DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
         }
