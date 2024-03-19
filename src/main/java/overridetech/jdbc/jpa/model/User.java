@@ -1,12 +1,13 @@
 package overridetech.jdbc.jpa.model;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table
+@Entity
+@Table(name = "users")
 public class User {
     @Id
+//    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -23,6 +24,7 @@ public class User {
     }
 
     public User(String name, String lastName, Byte age) {
+        this.setId(-1L);
         this.name = name;
         this.lastName = lastName;
         this.age = age;
