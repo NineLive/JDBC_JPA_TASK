@@ -3,10 +3,7 @@ package overridetech.jdbc.jpa.dao;
 import overridetech.jdbc.jpa.model.User;
 import overridetech.jdbc.jpa.util.Util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +30,22 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void saveUser(String name, String lastName, byte age) {
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute("INSERT INTO users(name, lastName,age) VALUES('" + name + "', '" + lastName + "', " + age + ");");
+        String sql = "INSERT INTO users(name, lastName, age) VALUES(?, ?, ?);";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            stmt.setString(2, lastName);
+            stmt.setByte(3, age);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void removeUserById(long id) {
-        try (Statement stmt = connection.createStatement()) {
-            stmt.execute("DELETE FROM users WHERE id = " + id + ";");
+        String sql = "DELETE FROM users WHERE id = ?;";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
