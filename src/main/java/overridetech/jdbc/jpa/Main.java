@@ -3,7 +3,6 @@ package overridetech.jdbc.jpa;
 import overridetech.jdbc.jpa.model.User;
 import overridetech.jdbc.jpa.service.UserService;
 import overridetech.jdbc.jpa.service.UserServiceImpl;
-import overridetech.jdbc.jpa.util.Util;
 
 import java.util.List;
 
@@ -12,11 +11,12 @@ public class Main {
 
         UserService userService = new UserServiceImpl();
 
-//        userService.createUsersTable();
+        userService.dropUsersTable();
+        userService.createUsersTable();
         System.out.println("TABLICA SOZDANA");
+
         userService.saveUser("serg","chs", (byte) 24);
         System.out.println("User с именем – \"serg\" добавлен в базу данных");
-
         userService.saveUser("serg2","chs", (byte) 2);
         System.out.println("User с именем – \"serg2\" добавлен в базу данных");
         userService.saveUser("serg3","chs", (byte) 15);
@@ -25,12 +25,15 @@ public class Main {
         System.out.println("User с именем – \"serg4\" добавлен в базу данных");
 
         List<User> users = userService.getAllUsers();
-        for (User user:users){
-            System.out.println(user);
-        }
+        users.forEach(System.out::println);
 
         userService.cleanUsersTable();
-
         userService.dropUsersTable();
+
+
+
     }
+
+
+
 }

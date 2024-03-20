@@ -1,15 +1,12 @@
 package overridetech.jdbc.jpa.dao;
 
-import org.hibernate.*;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import overridetech.jdbc.jpa.model.User;
 import overridetech.jdbc.jpa.util.Util;
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Root;
-import java.sql.Connection;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -23,7 +20,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         Session session = sessionFactory.openSession();
         session.getTransaction().begin();
-        String sql = "CREATE TABLE IF NOT EXISTS users (id BIGSERIAL NOT NULL PRIMARY KEY, name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, age integer NOT NULL);";
+        String sql = "CREATE TABLE IF NOT EXISTS users (id BIGSERIAL NOT NULL PRIMARY KEY, name VARCHAR(50), lastName VARCHAR(50), age int2);";
         Query query = session.createSQLQuery(sql);
         query.executeUpdate();
         session.getTransaction().commit();
